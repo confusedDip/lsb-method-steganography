@@ -12,10 +12,9 @@
 
 # In[1]:
 
-
+# Necessary Package Imports: PIL, numpy, pyplot
 import matplotlib.pyplot as plt
 import numpy as np
-# Necessary Package Imports: PIL, numpy, pyplot
 from PIL import Image
 
 
@@ -98,15 +97,13 @@ def hide(img_arr, text_to_hide: str = ""):
 
 # Take user input the "Text to hide"
 ip_text = input("Text to hide: ")
-ip_text += '\0' # Appending a terminating null character
-
+ip_text += '\0'  # Appending a terminating null character
 
 # In[7]:
 
 
 # Take user input the image filename
 image_filename = input("Cover Image Filename: ")
-
 
 # In[8]:
 
@@ -115,7 +112,6 @@ image_filename = input("Cover Image Filename: ")
 img_arr = image_to_mat(filename=image_filename)
 print(img_arr)
 
-
 # In[9]:
 
 
@@ -123,13 +119,11 @@ print(img_arr)
 op_img_arr = hide(img_arr=img_arr, text_to_hide=ip_text)
 print(op_img_arr)
 
-
 # In[10]:
 
 
 # Convert the text-hidden matrix to image and save
 mat_to_image(op_img_arr, image_filename)
-
 
 # In[11]:
 
@@ -146,8 +140,9 @@ ax2 = fig.add_subplot(1, 2, 2)
 ax2.set_title("Cover Image with Hidden Text")
 ax2.imshow(op_img_arr)
 
-plt.axis('off') 
+plt.axis('off')
 
+plt.show()
 
 # Hence, it is almost impossible to tell in bare eyes whether any secret text is hidden in this image or not
 
@@ -169,7 +164,7 @@ def stringify(bin_text: str):
         word = chr(int(bin_word, 2))
         text += word
         i += 8
-    
+
     return text
 
 
@@ -184,7 +179,7 @@ def unhide(img_arr):
 
     binary_text = ""
     binary_word = ""
-    
+
     curr_length = 0
 
     for row in range(n_rows):
@@ -195,7 +190,7 @@ def unhide(img_arr):
                 ip_lsb = ip_pixel_bin[-1]
                 binary_word += ip_lsb
                 curr_length += 1
-                
+
                 if curr_length == 8:
                     if stringify(binary_word) == '\x00':
                         return stringify(binary_text)
@@ -213,13 +208,11 @@ def unhide(img_arr):
 new_img_arr = image_to_mat(filename=f'output_{image_filename}')
 print(new_img_arr)
 
-
 # In[15]:
 
 
 # Retrieve the Hidden text from the image
 op_text = unhide(new_img_arr)
 print(f"The Hidden Text is: {op_text}")
-
 
 # Awesome, so we have retrieved the hidden text in that image!
